@@ -36,6 +36,13 @@ bool IcsHardSerialClass::synchronize(uint8_t* txBuffer, size_t txLength, uint8_t
     if (enPin_ >= 0) {
         digitalWrite(enPin_, LOW); // Enable reception
     }
+    // If enPin_ is not used, read and discard the first 2 bytes
+    if (enPin_ < 0) {
+        uint8_t discardBuffer[2];
+        if (serial_->readBytes(discardBuffer, 2) != 2) {
+            return false; // Failed to read the extra bytes
+        }
+    }
     size_t bytesRead = serial_->readBytes(rxBuffer, rxLength);
     return bytesRead == rxLength;
 }
