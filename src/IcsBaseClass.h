@@ -24,29 +24,31 @@ public:
     static constexpr int MAX_PARAM = 127;
     static constexpr int MIN_PARAM = 1;
 
-    // Angle limits
-    static constexpr float MAX_DEG = 180.0f;
-    static constexpr float MIN_DEG = -180.0f;
+  // Angle limits
+  static constexpr float MAX_DEG = 180.0f;
+  static constexpr float MIN_DEG = -180.0f;
 
-    IcsBaseClass() = default;
-    virtual ~IcsBaseClass() = default;
+  IcsBaseClass() = default;
+  virtual ~IcsBaseClass() = default;
 
-    // Servo methods
-    virtual int setServoPosition(uint8_t id, uint16_t pos);
-    virtual int setServoFree(uint8_t id);
+  // Servo methods
+  virtual int setServoPosition(uint8_t id, uint16_t pos);
+  virtual int setServoFree(uint8_t id);
 
-    // Parameter setting
-    virtual int setStretch(uint8_t id, uint8_t value);
-    virtual int setSpeed(uint8_t id, uint8_t value);
-    virtual int setCurrentLimit(uint8_t id, uint8_t value);
-    virtual int setTemperatureLimit(uint8_t id, uint8_t value);
+  // Parameter setting
+  virtual int setStretch(uint8_t id, uint8_t value);
+  virtual int setSpeed(uint8_t id, uint8_t value);
+  virtual int setCurrentLimit(uint8_t id, uint8_t value);
+  virtual int setTemperatureLimit(uint8_t id, uint8_t value);
+  virtual int setID(uint8_t id);
 
-    // Data retrieval
-    virtual int getStretch(uint8_t id);
-    virtual int getSpeed(uint8_t id);
-    virtual int getCurrent(uint8_t id);
-    virtual int getTemperature(uint8_t id);
-    virtual int getPosition(uint8_t id);
+  // Data retrieval
+  virtual int getStretch(uint8_t id);
+  virtual int getSpeed(uint8_t id);
+  virtual int getCurrentLimit(uint8_t id);
+  virtual int getTemperatureLimit(uint8_t id);
+  virtual int getPosition(uint8_t id);
+  virtual int getID();
 
 protected:
     // ID and range validation

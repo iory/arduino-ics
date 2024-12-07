@@ -32,9 +32,12 @@ bool IcsHardSerialClass::synchronize(uint8_t* txBuffer, size_t txLength, uint8_t
     }
     serial_->write(txBuffer, txLength);
     serial_->flush();
-    delayMicroseconds(100); // Ensure data transmission
+
+    while (serial_->available() > 0) {
+      serial_->read();
+    }
     if (enPin_ >= 0) {
-        digitalWrite(enPin_, LOW); // Enable reception
+        digitalWrite(enPin_, LOW);
     }
     // If enPin_ is not used, read and discard the first 2 bytes
     if (enPin_ < 0) {
