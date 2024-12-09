@@ -115,7 +115,7 @@ int IcsBaseClass::setCurrentLimit(uint8_t id, uint8_t value) {
   return rxCmd[sizeof(rxCmd) - 1];
 }
 
-int IcsBaseClass::setTemperatureLimit(uint8_t id, uint8_t value) {
+int IcsBaseClass::setTemperature(uint8_t id, uint8_t value) {
   if (validateId(id) == 0xFF) {
     return ICS_FALSE;
   }
@@ -127,7 +127,7 @@ int IcsBaseClass::setTemperatureLimit(uint8_t id, uint8_t value) {
   return rxCmd[sizeof(rxCmd) - 1];
 }
 
-int IcsBaseClass::getCurrentLimit(uint8_t id) {
+int IcsBaseClass::getCurrent(uint8_t id) {
   if (validateId(id) == 0xFF) {
     return ICS_FALSE;
   }

@@ -45,8 +45,8 @@ public:
   // Data retrieval
   virtual int getStretch(uint8_t id);
   virtual int getSpeed(uint8_t id);
-  virtual int getCurrentLimit(uint8_t id);
-  virtual int getTemperatureLimit(uint8_t id);
+  virtual int getCurrent(uint8_t id);
+  virtual int getTemperature(uint8_t id);
   virtual int getPosition(uint8_t id);
   virtual int getID();
 
