@@ -3,7 +3,7 @@
 
 #include <IcsHardSerialClass.h>
 
-// const byte EN_PIN = -1;
+// const int EN_PIN = -1;
 // const byte TX_PIN = 17;
 // const byte RX_PIN = 18;
 const byte EN_PIN = 6;
@@ -29,16 +29,16 @@ void test_krs_read(void) {
 }
 
 void test_krs_setServoPosition(void) {
+  delay(100);
   int position = krs->getPosition(SERVO_ID);
-  while (krs->setServoPosition(SERVO_ID, 7500) == -1) {
-    delay(10);
-  };
+  delay(500);
+  krs->setServoPosition(SERVO_ID, 7500);
   delay(1000);
-  while (krs->setServoPosition(SERVO_ID, 10000) == -1) {
-    delay(10);
-  };
+  krs->setServoPosition(SERVO_ID, 10000);
   delay(2000);
   position = krs->setServoFree(SERVO_ID);
+  delay(10);
+  position = krs->getPosition(SERVO_ID);
   TEST_ASSERT_INT_WITHIN(100, 10000, position);
 }
 

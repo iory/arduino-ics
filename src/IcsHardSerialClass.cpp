@@ -1,6 +1,6 @@
 #include "IcsHardSerialClass.h"
 
-IcsHardSerialClass::IcsHardSerialClass(HardwareSerial* serial, long baudRate, int timeout, uint8_t enPin)
+IcsHardSerialClass::IcsHardSerialClass(HardwareSerial* serial, long baudRate, int timeout, int enPin)
     : serial_(serial), enPin_(enPin), baudRate_(baudRate), timeout_(timeout) {}
 
 IcsHardSerialClass::~IcsHardSerialClass() {
@@ -26,26 +26,47 @@ bool IcsHardSerialClass::synchronize(uint8_t* txBuffer, size_t txLength, uint8_t
     if (!serial_) {
         return false;
     }
+
     serial_->flush();
+
     if (enPin_ >= 0) {
-        digitalWrite(enPin_, HIGH); // Enable transmission
+        digitalWrite(enPin_, HIGH);
     }
     serial_->write(txBuffer, txLength);
     serial_->flush();
-
     if (enPin_ >= 0) {
         while (serial_->available() > 0) {
             serial_->read();
         }
         digitalWrite(enPin_, LOW);
-    }
-    // If enPin_ is not used, read and discard the first 2 bytes
-    if (enPin_ < 0) {
-        uint8_t discardBuffer[2];
-        if (serial_->readBytes(discardBuffer, 2) != 2) {
-            return false; // Failed to read the extra bytes
+    } else {
+        int receivedBytes = 0;
+        unsigned long startTime = millis();
+        while (receivedBytes < 2) {
+            if (serial_->available() > 0) {
+                uint8_t byte = serial_->read();
+                if (byte == txBuffer[receivedBytes]) {
+                    receivedBytes++;
+                } else {
+                    startTime = millis();
+                }
+            }
+            if (millis() - startTime > 1000) {
+                return false;
+            }
         }
     }
-    size_t bytesRead = serial_->readBytes(rxBuffer, rxLength);
+
+    size_t bytesRead = 0;
+    unsigned long receiveStart = millis();
+
+    while (bytesRead < rxLength) {
+        if (serial_->available() > 0) {
+            rxBuffer[bytesRead++] = serial_->read();
+        }
+        if (millis() - receiveStart > 1000) {
+            return false;
+        }
+    }
     return bytesRead == rxLength;
 }

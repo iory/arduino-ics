@@ -9,7 +9,7 @@
  */
 class IcsHardSerialClass : public IcsBaseClass {
 public:
-    IcsHardSerialClass(HardwareSerial* serial, long baudRate, int timeout, uint8_t enPin = -1);
+    IcsHardSerialClass(HardwareSerial* serial, long baudRate, int timeout, int enPin = -1);
     ~IcsHardSerialClass() override;
 
     bool begin();
