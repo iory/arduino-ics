@@ -42,7 +42,7 @@ bool IcsHardSerialClass::synchronize(uint8_t* txBuffer, size_t txLength, uint8_t
     } else {
         int receivedBytes = 0;
         unsigned long startTime = millis();
-        while (receivedBytes < 2) {
+        while (receivedBytes < txLength) {
             if (serial_->available() > 0) {
                 uint8_t byte = serial_->read();
                 if (byte == txBuffer[receivedBytes]) {

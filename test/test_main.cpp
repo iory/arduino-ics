@@ -37,8 +37,6 @@ void test_krs_setServoPosition(void) {
   krs->setServoPosition(SERVO_ID, 10000);
   delay(2000);
   position = krs->setServoFree(SERVO_ID);
-  delay(10);
-  position = krs->getPosition(SERVO_ID);
   TEST_ASSERT_INT_WITHIN(100, 10000, position);
 }
 
