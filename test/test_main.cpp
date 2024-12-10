@@ -3,12 +3,17 @@
 
 #include <IcsHardSerialClass.h>
 
-// const int EN_PIN = -1;
-// const byte TX_PIN = 17;
-// const byte RX_PIN = 18;
-const byte EN_PIN = 6;
-const byte RX_PIN = 5;
-const byte TX_PIN = 38;
+#ifndef EN_PIN
+#define EN_PIN 6
+#endif
+
+#ifndef RX_PIN
+#define RX_PIN 5
+#endif
+
+#ifndef TX_PIN
+#define TX_PIN 38
+#endif
 
 const byte SERVO_ID = 0;
 
