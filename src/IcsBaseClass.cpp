@@ -162,3 +162,16 @@ int IcsBaseClass::getPosition(uint8_t id) {
   }
   return ((rxCmd[2] << 7) & 0x3F80) | (rxCmd[3] & 0x007F);
 }
+
+int IcsBaseClass::getEEPROM(uint8_t id) {
+  if (validateId(id) == 0xFF) {
+    return ICS_FALSE;
+  }
+  uint8_t txCmd[2] = {static_cast<uint8_t>(0xA0 + id), 0x00};
+  uint8_t rxCmd[66];
+
+  if (!synchronize(txCmd, sizeof(txCmd), rxCmd, sizeof(rxCmd))) {
+    return ICS_FALSE;
+  }
+  return 0;
+}

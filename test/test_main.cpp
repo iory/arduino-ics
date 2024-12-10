@@ -82,6 +82,10 @@ void test_krs_setTemperatureLimit(void) {
   TEST_ASSERT_NOT_EQUAL(-1, krs->getTemperature(SERVO_ID));
 }
 
+void test_krs_getEEPROM(void) {
+  TEST_ASSERT_NOT_EQUAL(-1, krs->getEEPROM(SERVO_ID));
+}
+
 
 void setup() {
   // NOTE!!! Wait for >2 secs
@@ -100,6 +104,7 @@ void setup() {
   RUN_TEST(test_krs_setSpeed);
   RUN_TEST(test_krs_setCurrentLimit);
   RUN_TEST(test_krs_setTemperatureLimit);
+  RUN_TEST(test_krs_getEEPROM);
   UNITY_END(); // stop unit testing
 }
 
