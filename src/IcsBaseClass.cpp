@@ -163,12 +163,27 @@ int IcsBaseClass::getPosition(uint8_t id) {
   return ((rxCmd[2] << 7) & 0x3F80) | (rxCmd[3] & 0x007F);
 }
 
-int IcsBaseClass::getEEPROM(uint8_t id) {
+int IcsBaseClass::getEEPROM(uint8_t id, uint8_t* rxBuffer) {
   if (validateId(id) == 0xFF) {
     return ICS_FALSE;
   }
   uint8_t txCmd[2] = {static_cast<uint8_t>(0xA0 + id), 0x00};
-  uint8_t rxCmd[66];
+
+  if (!synchronize(txCmd, sizeof(txCmd), rxBuffer, 66)) {
+    return ICS_FALSE;
+  }
+  return 0;
+}
+
+int IcsBaseClass::setEEPROM(uint8_t id, uint8_t* eepromData) {
+  if (validateId(id) == 0xFF) {
+    return ICS_FALSE;
+  }
+  uint8_t txCmd[66];
+  uint8_t rxCmd[2];
+  txCmd[0] = static_cast<uint8_t>(0xC0 + id);
+  txCmd[1] = 0x00;
+  memcpy(&txCmd[2], eepromData, 64);
 
   if (!synchronize(txCmd, sizeof(txCmd), rxCmd, sizeof(rxCmd))) {
     return ICS_FALSE;

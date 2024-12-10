@@ -50,7 +50,8 @@ public:
   virtual int getPosition(uint8_t id);
   virtual int getID();
 
-  virtual int getEEPROM(uint8_t id);
+  virtual int getEEPROM(uint8_t id, uint8_t* rxBuffer);
+  virtual int setEEPROM(uint8_t id, uint8_t* eepromData);
 
 protected:
     // ID and range validation
