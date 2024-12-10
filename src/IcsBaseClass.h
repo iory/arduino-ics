@@ -50,6 +50,8 @@ public:
   virtual int getPosition(uint8_t id);
   virtual int getID();
 
+  virtual int getEEPROM(uint8_t id);
+
 protected:
     // ID and range validation
     uint8_t validateId(uint8_t id) const;
