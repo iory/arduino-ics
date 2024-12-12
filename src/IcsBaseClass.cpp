@@ -221,3 +221,43 @@ int IcsBaseClass::setRotationMode(uint8_t id, bool rotation_mode) {
   }
   return 0;
 }
+
+int IcsBaseClass::getBaudrate(uint8_t id) {
+  if (validateId(id) == 0xFF) {
+    return ICS_FALSE;
+  }
+  uint8_t rxBuffer[66];
+  if (getEEPROM(id, rxBuffer) == ICS_FALSE) {
+    return ICS_FALSE;
+  };
+  switch (rxBuffer[2 + 27] & 0x0F) {
+  case 0:
+    return 1250000;
+  case 1:
+    return 625000;
+  case 10:
+    return 115200;
+  default:
+    return 115200;
+  }
+}
+
+int IcsBaseClass::setBaudrate(uint8_t id, int baudrate) {
+  if (validateId(id) == 0xFF) {
+    return ICS_FALSE;
+  }
+  if (baudrate != 1250000 && baudrate != 625000 && baudrate != 115200) {
+    return ICS_FALSE;
+  }
+  uint8_t rxBuffer[66];
+  if (getEEPROM(id, rxBuffer) == ICS_FALSE) {
+    return ICS_FALSE;
+  };
+  if (baudrate == 1250000)
+    rxBuffer[2 + 27] = 0;
+  else if (baudrate == 625000)
+    rxBuffer[2 + 27] = 1;
+  else
+    rxBuffer[2 + 27] = 10;
+  return setEEPROM(id, rxBuffer + 2);
+}
