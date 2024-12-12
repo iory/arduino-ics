@@ -4,7 +4,7 @@
 #include <IcsHardSerialClass.h>
 
 #ifndef EN_PIN
-#define EN_PIN 6
+#define EN_PIN -1
 #endif
 
 #ifndef RX_PIN
@@ -17,8 +17,12 @@
 
 const byte SERVO_ID = 0;
 
-
+#ifdef ARDUINO_AVR_NANO_EVERY
+const long BAUDRATE = 115200;
+#else
 const long BAUDRATE = 1250000;
+#endif
+
 const int TIMEOUT = 1000;
 IcsHardSerialClass *krs;
 
@@ -38,9 +42,11 @@ void test_krs_setServoPosition(void) {
   int position = krs->getPosition(SERVO_ID);
   delay(500);
   krs->setServoPosition(SERVO_ID, 7500);
-  delay(1000);
+  delay(3000);
+  position = krs->getPosition(SERVO_ID);
+  TEST_ASSERT_INT_WITHIN(100, 7500, position);
   krs->setServoPosition(SERVO_ID, 10000);
-  delay(2000);
+  delay(3000);
   position = krs->setServoFree(SERVO_ID);
   TEST_ASSERT_INT_WITHIN(100, 10000, position);
 }
@@ -105,11 +111,17 @@ void setup() {
 
   UNITY_BEGIN(); // IMPORTANT LINE!
 
+#ifdef ARDUINO_AVR_NANO_EVERY
+  krs = new IcsHardSerialClass(&Serial1, BAUDRATE, TIMEOUT, EN_PIN);
+#else
   Serial1.begin(BAUDRATE, SERIAL_8E1, RX_PIN, TX_PIN, false, TIMEOUT);
   krs = new IcsHardSerialClass(&Serial1, BAUDRATE, TIMEOUT, EN_PIN);
+#endif
   krs->begin();
 
+#ifndef ARDUINO_AVR_NANO_EVERY
   RUN_TEST(test_krs_isRotationMode);
+#endif
   RUN_TEST(test_krs_read);
   RUN_TEST(test_krs_setServoPosition);
   RUN_TEST(test_krs_setStretch);
