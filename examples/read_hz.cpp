@@ -7,6 +7,19 @@
 #define DEBUG_SERIAL USBSerial
 #endif
 
+
+#ifndef EN_PIN
+#define EN_PIN -1
+#endif
+
+#ifndef RX_PIN
+#define RX_PIN 18
+#endif
+
+#ifndef TX_PIN
+#define TX_PIN 17
+#endif
+
 const byte SERVO_ID = 0;
 const int TIMEOUT = 1000;
 IcsHardSerialClass *krs;
@@ -27,13 +40,9 @@ void setup() {
   delay(2000);
 
 #ifdef ARDUINO_AVR_NANO_EVERY
-  const int EN_PIN = -1;
   const long BAUDRATE = 115200;
   krs = new IcsHardSerialClass(&Serial1, BAUDRATE, TIMEOUT, EN_PIN);
 #else
-  const int EN_PIN = 6; // ATOM S3 pin
-  const byte TX_PIN = 38;
-  const byte RX_PIN = 5;
   const long BAUDRATE = 1250000;
   Serial1.begin(BAUDRATE, SERIAL_8E1, RX_PIN, TX_PIN, false, TIMEOUT);
   krs = new IcsHardSerialClass(&Serial1, BAUDRATE, TIMEOUT, EN_PIN);
