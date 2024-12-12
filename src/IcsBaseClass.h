@@ -41,6 +41,7 @@ public:
   virtual int setCurrentLimit(uint8_t id, uint8_t value);
   virtual int setTemperatureLimit(uint8_t id, uint8_t value);
   virtual int setID(uint8_t id);
+  virtual int setBaudrate(uint8_t id, int baudrate);
 
   // Data retrieval
   virtual int getStretch(uint8_t id);
@@ -49,6 +50,7 @@ public:
   virtual int getTemperature(uint8_t id);
   virtual int getPosition(uint8_t id);
   virtual int getID();
+  virtual int getBaudrate(uint8_t id);
 
   virtual int getEEPROM(uint8_t id, uint8_t* rxBuffer);
   virtual int setEEPROM(uint8_t id, uint8_t* eepromData);

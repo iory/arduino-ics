@@ -70,3 +70,12 @@ bool IcsHardSerialClass::synchronize(uint8_t* txBuffer, size_t txLength, uint8_t
     }
     return bytesRead == rxLength;
 }
+
+int IcsHardSerialClass::setBaudrate(uint8_t id, int baudrate) {
+  int ret = IcsBaseClass::setBaudrate(id, baudrate);
+  if (ret == ICS_FALSE) {
+    return ICS_FALSE;
+  }
+  baudRate_ = baudrate;
+  serial_->begin(baudRate_, SERIAL_8E1);
+}

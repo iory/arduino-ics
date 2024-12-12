@@ -32,6 +32,18 @@ void setUp(void) {
 void tearDown(void) {
 }
 
+void test_krs_setBaudrate(void) {
+  krs->setBaudrate(SERVO_ID, 115200);
+  delay(2000);
+  int baudrate = krs->getBaudrate(SERVO_ID);
+  TEST_ASSERT_EQUAL_INT(115200, baudrate);
+  delay(100);
+  krs->setBaudrate(SERVO_ID, 1250000);
+  delay(2000);
+  baudrate = krs->getBaudrate(SERVO_ID);
+  TEST_ASSERT_EQUAL_INT(1250000, baudrate);
+}
+
 void test_krs_read(void) {
   int position = krs->getPosition(SERVO_ID);
   TEST_ASSERT_NOT_EQUAL(-1, position);
@@ -120,6 +132,7 @@ void setup() {
   krs->begin();
 
 #ifndef ARDUINO_AVR_NANO_EVERY
+  RUN_TEST(test_krs_setBaudrate);
   RUN_TEST(test_krs_isRotationMode);
 #endif
   RUN_TEST(test_krs_read);

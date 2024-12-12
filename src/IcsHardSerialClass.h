@@ -13,6 +13,7 @@ public:
     ~IcsHardSerialClass() override;
 
     bool begin();
+    int setBaudrate(uint8_t id, int baudrate) override;
 
 protected:
     bool synchronize(uint8_t* txBuffer, size_t txLength, uint8_t* rxBuffer, size_t rxLength) override;
