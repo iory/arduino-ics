@@ -1,5 +1,7 @@
 # Arduino Library for ICS (Kondo Servo)
 
+[![Build Status](https://github.com/iory/arduino-ics/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/iory/arduino-ics/actions)
+
 This is a library for Kondo servos that supports Arduino and ESP with PlatformIO.
 You can easily perform ICS communication and control Kondo servos with it.
 
