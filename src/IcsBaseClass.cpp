@@ -190,3 +190,34 @@ int IcsBaseClass::setEEPROM(uint8_t id, uint8_t* eepromData) {
   }
   return 0;
 }
+
+int IcsBaseClass::isRotationMode(uint8_t id) {
+  if (validateId(id) == 0xFF) {
+    return ICS_FALSE;
+  }
+  uint8_t rxBuffer[66];
+  if (getEEPROM(id, rxBuffer) == ICS_FALSE) {
+    return ICS_FALSE;
+  };
+  return (rxBuffer[2 + 14] & 0x01) == 0x01;
+}
+
+int IcsBaseClass::setRotationMode(uint8_t id, bool rotation_mode) {
+  if (validateId(id) == 0xFF) {
+    return ICS_FALSE;
+  }
+  uint8_t rxBuffer[66];
+  if (getEEPROM(id, rxBuffer) == ICS_FALSE) {
+    return ICS_FALSE;
+  };
+  bool current_rotation_mode = (rxBuffer[2 + 14] & 0x1) == 0x01;
+  if (rotation_mode != current_rotation_mode) {
+    if (rotation_mode) {
+      rxBuffer[2 + 14] |= (1 << 0);
+    } else {
+      rxBuffer[2 + 14] = rxBuffer[2 + 14] & (~(1 << 0));
+    }
+    return setEEPROM(id, rxBuffer + 2);
+  }
+  return 0;
+}

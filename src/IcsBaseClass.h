@@ -53,6 +53,9 @@ public:
   virtual int getEEPROM(uint8_t id, uint8_t* rxBuffer);
   virtual int setEEPROM(uint8_t id, uint8_t* eepromData);
 
+  virtual int isRotationMode(uint8_t id);
+  virtual int setRotationMode(uint8_t id, bool rotation_mode);
+
 protected:
     // ID and range validation
     uint8_t validateId(uint8_t id) const;

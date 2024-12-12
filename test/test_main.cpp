@@ -82,12 +82,23 @@ void test_krs_setTemperatureLimit(void) {
   TEST_ASSERT_NOT_EQUAL(-1, krs->getTemperature(SERVO_ID));
 }
 
-void test_krs_getEEPROM(void) {
-  TEST_ASSERT_NOT_EQUAL(-1, krs->getEEPROM(SERVO_ID));
+void test_krs_isRotationMode(void) {
+  TEST_ASSERT_EQUAL(0, krs->setRotationMode(SERVO_ID, true));
+  delay(100);
+  TEST_ASSERT_EQUAL(1, krs->isRotationMode(SERVO_ID));
+  delay(100);
+  TEST_ASSERT_EQUAL(0, krs->setRotationMode(SERVO_ID, false));
+  delay(100);
+  TEST_ASSERT_EQUAL(0, krs->isRotationMode(SERVO_ID));
 }
 
 
 void setup() {
+  // USBSerial.begin(115200);
+  // while (!USBSerial) {
+  //   delay(10);
+  // }
+
   // NOTE!!! Wait for >2 secs
   // if board doesn't support software reset via Serial.DTR/RTS
   delay(2000);
@@ -98,13 +109,13 @@ void setup() {
   krs = new IcsHardSerialClass(&Serial1, BAUDRATE, TIMEOUT, EN_PIN);
   krs->begin();
 
+  RUN_TEST(test_krs_isRotationMode);
   RUN_TEST(test_krs_read);
   RUN_TEST(test_krs_setServoPosition);
   RUN_TEST(test_krs_setStretch);
   RUN_TEST(test_krs_setSpeed);
   RUN_TEST(test_krs_setCurrentLimit);
   RUN_TEST(test_krs_setTemperatureLimit);
-  RUN_TEST(test_krs_getEEPROM);
   UNITY_END(); // stop unit testing
 }
 
