@@ -41,7 +41,7 @@ public:
   virtual int setCurrentLimit(uint8_t id, uint8_t value);
   virtual int setTemperatureLimit(uint8_t id, uint8_t value);
   virtual int setID(uint8_t id);
-  virtual int setBaudrate(uint8_t id, int baudrate);
+  virtual int setBaudrate(uint8_t id, int baudrate, bool changeSerialBaudrate = false);
 
   // Data retrieval
   virtual int getStretch(uint8_t id);
