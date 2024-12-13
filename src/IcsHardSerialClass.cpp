@@ -51,7 +51,7 @@ bool IcsHardSerialClass::synchronize(uint8_t* txBuffer, size_t txLength, uint8_t
                     startTime = millis();
                 }
             }
-            if (millis() - startTime > 1000) {
+            if (millis() - startTime > timeout_) {
                 return false;
             }
         }
@@ -64,7 +64,7 @@ bool IcsHardSerialClass::synchronize(uint8_t* txBuffer, size_t txLength, uint8_t
         if (serial_->available() > 0) {
             rxBuffer[bytesRead++] = serial_->read();
         }
-        if (millis() - receiveStart > 1000) {
+        if (millis() - receiveStart > timeout_) {
             return false;
         }
     }
