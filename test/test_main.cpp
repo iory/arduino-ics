@@ -32,6 +32,15 @@ void setUp(void) {
 void tearDown(void) {
 }
 
+void test_krs_scanIDs(void) {
+  uint32_t ids = krs->scanIDs();
+  TEST_ASSERT_EQUAL(true, static_cast<int>(ids) == (1 << 0));
+  krs->setID(10);
+  ids = krs->scanIDs();
+  TEST_ASSERT_EQUAL(true, static_cast<int>(ids) == (1 << 10));
+  krs->setID(0);
+}
+
 void test_krs_setBaudrate(void) {
   krs->setBaudrate(SERVO_ID, 115200, true);
   delay(2000);
@@ -131,7 +140,9 @@ void setup() {
 #endif
   krs->begin();
 
+  krs->setID(0);
 #ifndef ARDUINO_AVR_NANO_EVERY
+  RUN_TEST(test_krs_scanIDs);
   RUN_TEST(test_krs_setBaudrate);
   RUN_TEST(test_krs_isRotationMode);
 #endif

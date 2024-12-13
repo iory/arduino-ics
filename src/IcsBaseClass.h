@@ -58,6 +58,8 @@ public:
   virtual int isRotationMode(uint8_t id);
   virtual int setRotationMode(uint8_t id, bool rotation_mode);
 
+  virtual uint32_t scanIDs();
+
 protected:
     // ID and range validation
     uint8_t validateId(uint8_t id) const;
