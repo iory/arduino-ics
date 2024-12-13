@@ -68,26 +68,38 @@ void setup() {
 
 void loop() {
   cnt++;
-  DEBUG_SERIAL.print("Pulse    ");
+  if (cnt % 100 == 0) {
+    DEBUG_SERIAL.print("Pulse    ");
+  }
   for (size_t i = 0; i < ids.size(); ++i) {
     position = krs->getPosition(ids[i]);
-    sprintf(log_msg, "%3d: %04d,", ids[i], position);
-    DEBUG_SERIAL.print(log_msg);
+    if (cnt % 100 == 0) {
+      sprintf(log_msg, "%3d: %04d  ,", ids[i], position);
+      DEBUG_SERIAL.print(log_msg);
+    }
     stats_vector[i].update(position);
   }
-  DEBUG_SERIAL.print('\n');
-  DEBUG_SERIAL.print("Mean     ");
+  if (cnt % 100 == 0) {
+    DEBUG_SERIAL.print('\n');
+    DEBUG_SERIAL.print("Mean     ");
+  }
   for (size_t i = 0; i < ids.size(); ++i) {
     float mean = stats_vector[i].mean();
-    sprintf(log_msg, "%3d: %04d.%01d,", ids[i], int(mean), int(int(1000 * mean) % 1000 / 100));
-    DEBUG_SERIAL.print(log_msg);
+    if (cnt % 100 == 0) {
+      sprintf(log_msg, "%3d: %04d.%01d,", ids[i], int(mean), int(int(1000 * mean) % 1000 / 100));
+      DEBUG_SERIAL.print(log_msg);
+    }
   }
-  DEBUG_SERIAL.print('\n');
-  DEBUG_SERIAL.print("Variance ");
+  if (cnt % 100 == 0) {
+    DEBUG_SERIAL.print('\n');
+    DEBUG_SERIAL.print("Variance ");
+  }
   for (size_t i = 0; i < ids.size(); ++i) {
     float std = stats_vector[i].std();
-    sprintf(log_msg, "%3d: %4d.%01d,", ids[i], int(std), int(int(1000 * std) % 1000 / 100));
-    DEBUG_SERIAL.print(log_msg);
+    if (cnt % 100 == 0) {
+      sprintf(log_msg, "%3d: %4d.%01d,", ids[i], int(std), int(int(1000 * std) % 1000 / 100));
+      DEBUG_SERIAL.print(log_msg);
+    }
   }
   if (cnt % 100 == 0) {
     for (size_t i = 0; i < ids.size(); ++i) {
@@ -95,5 +107,8 @@ void loop() {
     }
     cnt = 0;
   }
-  DEBUG_SERIAL.print('\n');
+  if (cnt % 100 == 0) {
+    DEBUG_SERIAL.print('\n');
+    DEBUG_SERIAL.print('\n');
+  }
 }
