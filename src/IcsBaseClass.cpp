@@ -261,3 +261,15 @@ int IcsBaseClass::setBaudrate(uint8_t id, int baudrate, bool changeSerialBaudrat
     rxBuffer[2 + 27] = 10;
   return setEEPROM(id, rxBuffer + 2);
 }
+
+uint32_t IcsBaseClass::scanIDs() {
+  uint32_t idBitmap = 0;
+  int position;
+  for (uint8_t id = 0; id <= 31; ++id) {
+    position = getPosition(id);
+    if (position != ICS_FALSE) {
+      idBitmap |= (1UL << id);
+    }
+  }
+  return idBitmap;
+}
