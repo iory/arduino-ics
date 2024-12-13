@@ -33,12 +33,12 @@ void tearDown(void) {
 }
 
 void test_krs_setBaudrate(void) {
-  krs->setBaudrate(SERVO_ID, 115200);
+  krs->setBaudrate(SERVO_ID, 115200, true);
   delay(2000);
   int baudrate = krs->getBaudrate(SERVO_ID);
   TEST_ASSERT_EQUAL_INT(115200, baudrate);
   delay(100);
-  krs->setBaudrate(SERVO_ID, 1250000);
+  krs->setBaudrate(SERVO_ID, 1250000, true);
   delay(2000);
   baudrate = krs->getBaudrate(SERVO_ID);
   TEST_ASSERT_EQUAL_INT(1250000, baudrate);

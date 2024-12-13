@@ -242,7 +242,7 @@ int IcsBaseClass::getBaudrate(uint8_t id) {
   }
 }
 
-int IcsBaseClass::setBaudrate(uint8_t id, int baudrate) {
+int IcsBaseClass::setBaudrate(uint8_t id, int baudrate, bool changeSerialBaudrate) {
   if (validateId(id) == 0xFF) {
     return ICS_FALSE;
   }
