@@ -94,3 +94,22 @@ int IcsHardSerialClass::changeBaudrate(int baudrate) {
   serial_->begin(baudRate_, SERIAL_8E1);
   return 0;
 }
+
+uint32_t IcsHardSerialClass::scanIDs() {
+  uint32_t idBitmap = 0;
+  int currentBaudrate = baudRate_;
+  int baudrates[3] = {115200, 625000, 1250000};
+  for (size_t i = 0; i < 3; ++i) {
+    changeBaudrate(baudrates[i]);
+    for (uint8_t id = 0; id <= 31; ++id) {
+      if (getPosition(id) != ICS_FALSE) {
+        if (currentBaudrate != baudrates[i]) {
+          setBaudrate(id, currentBaudrate);
+        }
+        idBitmap |= (1UL << id);
+      }
+    }
+  }
+  changeBaudrate(currentBaudrate);
+  return idBitmap;
+}
