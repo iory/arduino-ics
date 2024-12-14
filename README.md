@@ -30,9 +30,10 @@ pip3 install platformio -U
 
 ### Compile and write firmware to arduino
 
-Assign ID 0 to the Kondo servo and set the baud rate to 115200.
-Please wire it as shown in the following photo. Connecting a 220Ω resistor to the RX and TX pins will work fine.
+Connect the servo as shown in the diagram below. Ensure that a 2.2kΩ resistor is placed between the RX and TX pins for proper operation.
 
+For more details on the serial servo configuration, please refer to the official documentation:
+[Kondo Serial Servo Wiring](https://kondo-robot.com/faq/serial-servo-method-tech)
 ![Wiring Example](./docs/arduino_nano_every.jpg)
 
 ```
