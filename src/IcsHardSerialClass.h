@@ -14,6 +14,8 @@ public:
 
     bool begin();
     int setBaudrate(uint8_t id, int baudrate, bool changeSerialBaudrate = false) override;
+    int changeBaudrate(int baudrate);
+    uint32_t scanIDs() override;
 
 protected:
     bool synchronize(uint8_t* txBuffer, size_t txLength, uint8_t* rxBuffer, size_t rxLength) override;

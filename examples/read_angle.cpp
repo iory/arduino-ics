@@ -55,9 +55,10 @@ void setup() {
   while (ids.size() == 0) {
     ids.clear();
     stats_vector.clear();
-    for (int servo_id = 0; servo_id < 18; ++servo_id) {
-      position = krs->getPosition(servo_id);
-      if (position != -1) {
+
+    uint32_t idBits = krs->scanIDs();
+    for (int servo_id = 0; servo_id < 32; ++servo_id) {
+      if (static_cast<int>(idBits) & (1 << servo_id)) {
         ids.push_back(servo_id);
         RunningStats stats;
         stats_vector.push_back(stats);
