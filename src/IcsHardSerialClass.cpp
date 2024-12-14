@@ -48,8 +48,9 @@ bool IcsHardSerialClass::synchronize(uint8_t* txBuffer, size_t txLength, uint8_t
                 if (byte == txBuffer[receivedBytes]) {
                     receivedBytes++;
                 } else {
-                    startTime = millis();
+                    receivedBytes = 0;
                 }
+                startTime = millis();
             }
             if (millis() - startTime > timeout_) {
                 return false;
@@ -61,8 +62,11 @@ bool IcsHardSerialClass::synchronize(uint8_t* txBuffer, size_t txLength, uint8_t
     unsigned long receiveStart = millis();
 
     while (bytesRead < rxLength) {
-        if (serial_->available() > 0) {
-            rxBuffer[bytesRead++] = serial_->read();
+        size_t availableBytes = serial_->available();
+        if (availableBytes > 0) {
+            size_t toRead = min(rxLength - bytesRead, availableBytes);
+            size_t readCount = serial_->readBytes(&rxBuffer[bytesRead], toRead);
+            bytesRead += readCount;
         }
         if (millis() - receiveStart > timeout_) {
             return false;
@@ -80,4 +84,13 @@ int IcsHardSerialClass::setBaudrate(uint8_t id, int baudrate, bool changeSerialB
     baudRate_ = baudrate;
     serial_->begin(baudRate_, SERIAL_8E1);
   }
+}
+
+int IcsHardSerialClass::changeBaudrate(int baudrate) {
+  if (baudrate != 1250000 && baudrate != 625000 && baudrate != 115200) {
+    return ICS_FALSE;
+  }
+  baudRate_ = baudrate;
+  serial_->begin(baudRate_, SERIAL_8E1);
+  return 0;
 }
