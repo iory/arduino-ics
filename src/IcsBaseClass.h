@@ -28,18 +28,24 @@ public:
   static constexpr float MAX_DEG = 180.0f;
   static constexpr float MIN_DEG = -180.0f;
 
+  static const float setting_value_to_temperature[128];
+  static constexpr int setting_value_to_temperature_size = 128;
+
   IcsBaseClass() = default;
   virtual ~IcsBaseClass() = default;
 
   // Servo methods
   virtual int setServoPosition(uint8_t id, uint16_t pos);
   virtual int setServoFree(uint8_t id);
+  virtual int setServoHold(uint8_t id);
 
   // Parameter setting
   virtual int setStretch(uint8_t id, uint8_t value);
   virtual int setSpeed(uint8_t id, uint8_t value);
   virtual int setCurrentLimit(uint8_t id, uint8_t value);
+  virtual int setCurrentLimitInAmpere(uint8_t id, float value);
   virtual int setTemperatureLimit(uint8_t id, uint8_t value);
+  virtual int setTemperatureLimitInCelsius(uint8_t id, float temperature);
   virtual int setID(uint8_t id);
   virtual int setBaudrate(uint8_t id, int baudrate, bool changeSerialBaudrate = false);
 
@@ -47,7 +53,10 @@ public:
   virtual int getStretch(uint8_t id);
   virtual int getSpeed(uint8_t id);
   virtual int getCurrent(uint8_t id);
+  virtual float getCurrentInAmpere(uint8_t id);
   virtual int getTemperature(uint8_t id);
+  virtual float getTemperatureInCelsius(uint8_t id);
+  virtual int getSettingValueFromTemperature(float temperature);
   virtual int getPosition(uint8_t id);
   virtual int getID();
   virtual int getBaudrate(uint8_t id);
