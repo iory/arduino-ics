@@ -1,3 +1,6 @@
+#ifndef SERVO_SUB_COMMAND_H
+#define SERVO_SUB_COMMAND_H
+
 enum ServoSubCommand {
   EEPROM,
   STRETCH,
@@ -6,3 +9,5 @@ enum ServoSubCommand {
   TEMPERATURE,
   POSITION,
 };
+
+#endif // SERVO_SUB_COMMAND_H
