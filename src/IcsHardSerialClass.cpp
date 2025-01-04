@@ -59,7 +59,7 @@ bool IcsHardSerialClass::synchronize(uint8_t* txBuffer, size_t txLength, uint8_t
     }
 
     size_t bytesRead = 0;
-    unsigned long receiveStart = millis();
+    unsigned long receivedTime = millis();
 
     while (bytesRead < rxLength) {
         size_t availableBytes = serial_->available();
@@ -67,8 +67,9 @@ bool IcsHardSerialClass::synchronize(uint8_t* txBuffer, size_t txLength, uint8_t
             size_t toRead = min(rxLength - bytesRead, availableBytes);
             size_t readCount = serial_->readBytes(&rxBuffer[bytesRead], toRead);
             bytesRead += readCount;
+            receivedTime = millis();
         }
-        if (millis() - receiveStart > timeout_) {
+        if (millis() - receivedTime > timeout_) {
             return false;
         }
     }
