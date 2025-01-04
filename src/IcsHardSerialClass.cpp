@@ -60,6 +60,11 @@ bool IcsHardSerialClass::synchronize(uint8_t* txBuffer, size_t txLength, uint8_t
 
     size_t bytesRead = 0;
     unsigned long receivedTime = millis();
+    unsigned long adjustedTimeout = timeout_;
+    if (txLength > 64) {
+      // overwrite eeprom takes too much time.
+      adjustedTimeout *= 50;
+    }
 
     while (bytesRead < rxLength) {
         size_t availableBytes = serial_->available();
@@ -69,7 +74,7 @@ bool IcsHardSerialClass::synchronize(uint8_t* txBuffer, size_t txLength, uint8_t
             bytesRead += readCount;
             receivedTime = millis();
         }
-        if (millis() - receivedTime > timeout_) {
+        if (millis() - receivedTime > adjustedTimeout) {
             return false;
         }
     }
