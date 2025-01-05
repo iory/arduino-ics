@@ -253,11 +253,11 @@ int IcsBaseClass::getEEPROM(uint8_t id, uint8_t* rxBuffer) {
 }
 
 int IcsBaseClass::setEEPROM(uint8_t id, uint8_t* eepromData) {
-  if (validateId(id) == 0xFF) {
+  if (eepromData == nullptr || validateId(id) == 0xFF) {
     return ICS_FALSE;
   }
-  uint8_t txCmd[66];
-  uint8_t rxCmd[2];
+  uint8_t txCmd[66] = {0};
+  uint8_t rxCmd[2] = {0};
   txCmd[0] = static_cast<uint8_t>(0xC0 + id);
   txCmd[1] = 0x00;
   memcpy(&txCmd[2], eepromData, 64);
