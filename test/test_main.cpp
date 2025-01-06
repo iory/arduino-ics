@@ -130,7 +130,7 @@ void setup() {
   // if board doesn't support software reset via Serial.DTR/RTS
   delay(2000);
 
-  UNITY_BEGIN(); // IMPORTANT LINE!
+  UNITY_BEGIN();  // IMPORTANT LINE!
 
 #ifdef ARDUINO_AVR_NANO_EVERY
   krs = new IcsHardSerialClass(&Serial1, BAUDRATE, TIMEOUT, EN_PIN);
@@ -152,7 +152,7 @@ void setup() {
   RUN_TEST(test_krs_setSpeed);
   RUN_TEST(test_krs_setCurrentLimit);
   RUN_TEST(test_krs_setTemperatureLimit);
-  UNITY_END(); // stop unit testing
+  UNITY_END();  // stop unit testing
 }
 
 
