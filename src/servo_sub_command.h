@@ -10,4 +10,4 @@ enum ServoSubCommand {
   POSITION,
 };
 
-#endif // SERVO_SUB_COMMAND_H
+#endif  // SERVO_SUB_COMMAND_H

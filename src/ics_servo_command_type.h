@@ -8,4 +8,4 @@ enum ICSServoCommandType {
   ID_REQUEST = 0xE0
 };
 
-#endif // ICS_SERVO_COMMAND_TYPE_H
+#endif  // ICS_SERVO_COMMAND_TYPE_H

@@ -59,12 +59,12 @@ void loop() {
   // Report every 1000 ms
   unsigned int current_time = millis();
   if (current_time - last_report_time >= 1000) {
-    measured_hz = 1.0 * sample_count / ((current_time - last_report_time) / 1000.0); // Calculate Hz
+    measured_hz = 1.0 * sample_count / ((current_time - last_report_time) / 1000.0);  // Calculate Hz
 
     char log_msg[100];
     sprintf(log_msg, "Samples: %d, Hz: %d\n", sample_count, int(measured_hz));
     DEBUG_SERIAL.print(log_msg);
-    sample_count = 0; // Reset sample count
-    last_report_time = current_time; // Update last report time
+    sample_count = 0;                 // Reset sample count
+    last_report_time = current_time;  // Update last report time
   }
 }

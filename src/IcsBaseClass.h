@@ -9,21 +9,21 @@
  */
 class IcsBaseClass {
 public:
-    // Servo ID range
-    static constexpr int MAX_ID = 31;
-    static constexpr int MIN_ID = 0;
+  // Servo ID range
+  static constexpr int MAX_ID = 31;
+  static constexpr int MIN_ID = 0;
 
-    // Position limits
-    static constexpr int MAX_POS = 11500;
-    static constexpr int MIN_POS = 3500;
-    static constexpr int CENTER_POS = 7500;
+  // Position limits
+  static constexpr int MAX_POS = 11500;
+  static constexpr int MIN_POS = 3500;
+  static constexpr int CENTER_POS = 7500;
 
-    // Error handling
-    static constexpr int ICS_FALSE = -1;
+  // Error handling
+  static constexpr int ICS_FALSE = -1;
 
-    // Parameter limits
-    static constexpr int MAX_PARAM = 127;
-    static constexpr int MIN_PARAM = 1;
+  // Parameter limits
+  static constexpr int MAX_PARAM = 127;
+  static constexpr int MIN_PARAM = 1;
 
   // Angle limits
   static constexpr float MAX_DEG = 180.0f;
@@ -82,12 +82,12 @@ public:
   virtual uint32_t scanIDs();
 
 protected:
-    // ID and range validation
-    uint8_t validateId(uint8_t id) const;
-    bool validateRange(int value, int min, int max) const;
+  // ID and range validation
+  uint8_t validateId(uint8_t id) const;
+  bool validateRange(int value, int min, int max) const;
 
-    // Communication method (to be implemented by derived classes)
-    virtual bool synchronize(uint8_t* txBuffer, size_t txLength, uint8_t* rxBuffer, size_t rxLength) = 0;
+  // Communication method (to be implemented by derived classes)
+  virtual bool synchronize(uint8_t* txBuffer, size_t txLength, uint8_t* rxBuffer, size_t rxLength) = 0;
 };
 
-#endif // ICS_BASE_H
+#endif  // ICS_BASE_H

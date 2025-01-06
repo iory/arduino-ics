@@ -104,4 +104,4 @@ protected:
   bool id_changed_;
 };
 
-#endif // ICS_PACKET_HANDLER_H
+#endif  // ICS_PACKET_HANDLER_H
