@@ -52,6 +52,12 @@ public:
   }
 
   bool processByte(uint8_t byte) {
+    if (buffer_pos_ == 0) {
+      if (!isValidHeader(byte)
+          || (((byte & 0xE0) != 0xE0) && (byte & 0x1F) != getId())) {
+        return false;
+      }
+    }
     if (buffer_pos_ >= MAX_PACKET_SIZE) {
       resetBuffer();
     }

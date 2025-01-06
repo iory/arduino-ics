@@ -16,6 +16,7 @@ public:
     // Position limits
     static constexpr int MAX_POS = 11500;
     static constexpr int MIN_POS = 3500;
+    static constexpr int CENTER_POS = 7500;
 
     // Error handling
     static constexpr int ICS_FALSE = -1;
@@ -28,11 +29,21 @@ public:
   static constexpr float MAX_DEG = 180.0f;
   static constexpr float MIN_DEG = -180.0f;
 
+  static constexpr float DEGREE_TO_PULSE = 29.633f;
+
   static const float setting_value_to_temperature[128];
   static constexpr int setting_value_to_temperature_size = 128;
 
   IcsBaseClass() = default;
   virtual ~IcsBaseClass() = default;
+
+  // Angle conversion
+  static int degreeToPulse(float angle) {
+    return static_cast<int>(angle * DEGREE_TO_PULSE) + CENTER_POS;
+  }
+  static float pulseToDegree(int pulse) {
+    return static_cast<float>((pulse - CENTER_POS) / DEGREE_TO_PULSE);
+  }
 
   // Servo methods
   virtual int setServoPosition(uint8_t id, uint16_t pos);
@@ -73,10 +84,6 @@ protected:
     // ID and range validation
     uint8_t validateId(uint8_t id) const;
     bool validateRange(int value, int min, int max) const;
-
-    // Angle conversion
-    static int angleToPosition(float angle);
-    static float positionToAngle(int position);
 
     // Communication method (to be implemented by derived classes)
     virtual bool synchronize(uint8_t* txBuffer, size_t txLength, uint8_t* rxBuffer, size_t rxLength) = 0;
