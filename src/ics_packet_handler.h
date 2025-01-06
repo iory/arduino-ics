@@ -72,6 +72,8 @@ public:
       if (expected_length > 0 && buffer_pos_ >= expected_length) {
         packet_ready_ = true;
         buffer_pos_ = 0;
+      } else if (expected_length == 0) {
+        resetBuffer();
       }
     }
 
@@ -85,7 +87,7 @@ public:
 
 protected:
   virtual bool isValidHeader(uint8_t byte) const {
-    return (byte & 0xE0) != 0;
+    return (byte & 0xE0) >= 0x20;
   }
 
   virtual size_t determinePacketLength(const uint8_t* header) const = 0;
