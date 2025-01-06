@@ -1,7 +1,7 @@
 #include "IcsHardSerialClass.h"
 
-IcsHardSerialClass::IcsHardSerialClass(HardwareSerial* serial, long baudRate, int timeout, int enPin)
-    : serial_(serial), enPin_(enPin), baudRate_(baudRate), timeout_(timeout) {}
+IcsHardSerialClass::IcsHardSerialClass(HardwareSerial* serial, long baudRate, int timeout, int enPin, int openDrainTxPin)
+    : serial_(serial), enPin_(enPin), baudRate_(baudRate), timeout_(timeout), openDrainTxPin_(openDrainTxPin) {}
 
 IcsHardSerialClass::~IcsHardSerialClass() {
     if (serial_) {
@@ -32,8 +32,14 @@ bool IcsHardSerialClass::synchronize(uint8_t* txBuffer, size_t txLength, uint8_t
     if (enPin_ >= 0) {
         digitalWrite(enPin_, HIGH);
     }
+    if (openDrainTxPin_ >= 0) {
+      digitalWrite(openDrainTxPin_, LOW);
+    }
     serial_->write(txBuffer, txLength);
     serial_->flush();
+    if (openDrainTxPin_ >= 0) {
+      digitalWrite(openDrainTxPin_, HIGH);
+    }
     if (enPin_ >= 0) {
         while (serial_->available() > 0) {
             serial_->read();
