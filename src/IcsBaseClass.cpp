@@ -319,6 +319,18 @@ int IcsBaseClass::getBaudrate(uint8_t id) {
   }
 }
 
+int IcsBaseClass::getServoType(uint8_t id) {
+  // this is unofficial packet.
+  if (validateId(id) == 0xFF) {
+    return ICS_FALSE;
+  }
+  uint8_t rxBuffer[66];
+  if (getEEPROM(id, rxBuffer) == ICS_FALSE) {
+    return ICS_FALSE;
+  };
+  return rxBuffer[2 + 26] & 0x0F;
+}
+
 int IcsBaseClass::setBaudrate(uint8_t id, int baudrate, bool changeSerialBaudrate) {
   if (validateId(id) == 0xFF) {
     return ICS_FALSE;
