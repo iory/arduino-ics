@@ -2,6 +2,7 @@
 #define ICS_HARD_SERIAL_H
 
 #include "IcsBaseClass.h"
+#include "mutex_helper.h"
 
 /**
  * @class IcsHardSerialClass
@@ -19,6 +20,7 @@ public:
 
 protected:
   bool synchronize(uint8_t* txBuffer, size_t txLength, uint8_t* rxBuffer, size_t rxLength) override;
+  bool synchronizeImpl(uint8_t* txBuffer, size_t txLength, uint8_t* rxBuffer, size_t rxLength);
 
 private:
   HardwareSerial* serial_;
@@ -26,6 +28,7 @@ private:
   int8_t openDrainTxPin_;
   long baudRate_;
   int timeout_;
+  MutexHelper mutex_;
 };
 
 #endif  // ICS_HARD_SERIAL_H
