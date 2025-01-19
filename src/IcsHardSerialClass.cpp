@@ -1,7 +1,8 @@
 #include "IcsHardSerialClass.h"
 
 IcsHardSerialClass::IcsHardSerialClass(HardwareSerial* serial, long baudRate, int timeout, int enPin, int openDrainTxPin)
-  : serial_(serial), enPin_(enPin), baudRate_(baudRate), timeout_(timeout), openDrainTxPin_(openDrainTxPin) {}
+  : serial_(serial), enPin_(enPin), baudRate_(baudRate), timeout_(timeout), openDrainTxPin_(openDrainTxPin),
+    mutex_() {}
 
 IcsHardSerialClass::~IcsHardSerialClass() {
   if (serial_) {
@@ -22,7 +23,7 @@ bool IcsHardSerialClass::begin() {
   return true;
 }
 
-bool IcsHardSerialClass::synchronize(uint8_t* txBuffer, size_t txLength, uint8_t* rxBuffer, size_t rxLength) {
+bool IcsHardSerialClass::synchronizeImpl(uint8_t* txBuffer, size_t txLength, uint8_t* rxBuffer, size_t rxLength) {
   if (!serial_) {
     return false;
   }
@@ -85,6 +86,13 @@ bool IcsHardSerialClass::synchronize(uint8_t* txBuffer, size_t txLength, uint8_t
     }
   }
   return bytesRead == rxLength;
+}
+
+bool IcsHardSerialClass::synchronize(uint8_t* txBuffer, size_t txLength, uint8_t* rxBuffer, size_t rxLength) {
+  mutex_.lock();
+  bool result = synchronizeImpl(txBuffer, txLength, rxBuffer, rxLength);
+  mutex_.unlock();
+  return result;
 }
 
 int IcsHardSerialClass::setBaudrate(uint8_t id, int baudrate, bool changeSerialBaudrate) {
