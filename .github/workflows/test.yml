@@ -35,3 +35,15 @@ jobs:
         run: pio run
       - name: Build and Test PlatformIO Project
         run: pio test -e atoms3 -vvv
+
+  clang_format:
+    name: Check Clang Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install clang-format
+        run: sudo apt-get install -y clang-format
+      - name: Run clang-format
+        run: |
+          find . \( -iname '*.c' -o -iname '*.h' -o -iname '*.cpp' -o -iname '*.hpp' -o -iname '*.ino' \) ! -path '*/.*/*' -print0 | xargs -0 clang-format -i
+          git diff --exit-code
