@@ -1,0 +1,61 @@
+#######################################
+# Syntax Coloring Map For arduino-ics
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+IcsBaseClass	KEYWORD1
+IcsHardSerialClass	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
+setServoPosition	KEYWORD2
+setServoFree	KEYWORD2
+setServoHold	KEYWORD2
+setStretch	KEYWORD2
+setSpeed	KEYWORD2
+setCurrentLimit	KEYWORD2
+setCurrentLimitInAmpere	KEYWORD2
+setTemperatureLimit	KEYWORD2
+setTemperatureLimitInCelsius	KEYWORD2
+setID	KEYWORD2
+setBaudrate	KEYWORD2
+changeBaudrate	KEYWORD2
+getStretch	KEYWORD2
+getSpeed	KEYWORD2
+getCurrent	KEYWORD2
+getCurrentInAmpere	KEYWORD2
+getTemperature	KEYWORD2
+getTemperatureInCelsius	KEYWORD2
+getPosition	KEYWORD2
+getID	KEYWORD2
+getBaudrate	KEYWORD2
+getServoType	KEYWORD2
+getEEPROM	KEYWORD2
+setEEPROM	KEYWORD2
+isRotationMode	KEYWORD2
+setRotationMode	KEYWORD2
+scanIDs	KEYWORD2
+degreeToPulse	KEYWORD2
+pulseToDegree	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+MAX_ID	LITERAL1
+MIN_ID	LITERAL1
+MAX_POS	LITERAL1
+MIN_POS	LITERAL1
+CENTER_POS	LITERAL1
+ICS_FALSE	LITERAL1
+MAX_PARAM	LITERAL1
+MIN_PARAM	LITERAL1
+MAX_DEG	LITERAL1
+MIN_DEG	LITERAL1
+DEGREE_TO_PULSE	LITERAL1
